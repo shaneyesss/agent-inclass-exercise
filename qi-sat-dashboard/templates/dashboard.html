@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Average Courtesy Scores</h1>
+    <canvas id="scoreChart" width="600" height="400"></canvas>
+
+    <script>
+        const labels = {{ dates|tojson }};
+        const nurseData = {{ nurse_avgs|tojson }};
+        const physData = {{ phys_avgs|tojson }};
+
+        const ctx = document.getElementById('scoreChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Nurse',
+                        borderColor: 'blue',
+                        data: nurseData,
+                        fill: false,
+                    },
+                    {
+                        label: 'Physician',
+                        borderColor: 'green',
+                        data: physData,
+                        fill: false,
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        min: 0,
+                        max: 5
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
